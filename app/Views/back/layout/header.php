@@ -15,10 +15,6 @@
         <li><a href="#">Menú Mobile</a></li>
     </ul>
 
-    <ul id="dropdown1" class="dropdown-content">
-        <a href="<?php echo base_url('backend/users/create'); ?>">Crear</a>
-        <a href="<?php echo base_url('backend/users/index'); ?>">Ver/Editar</a>
-    </ul>
     <ul id="dropdown2" class="dropdown-content">
         <a href="<?php echo base_url('backend/heroes/import'); ?>" id="importar_heroes">Importar</a>
         <a href="<?php echo base_url('backend/heroes/create'); ?>">Crear</a>
@@ -41,12 +37,6 @@
             </a>
             <ul class="right hide-on-med-and-down">
 
-                <li class="<?php echo activeMenuItem('user', $controladorActualName); ?>">
-                    <a class="dropdown-trigger white-text" href="#!" data-target="dropdown1">
-                        Administradores
-                        <i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
                 <li class="<?php echo activeMenuItem('heroes', $controladorActualName); ?>">
                     <a class="dropdown-trigger white-text" href="#!" data-target="dropdown2">
                         Héroes

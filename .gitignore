@@ -83,3 +83,13 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,sublimetext,codeigniter
+
+
+
+# Evitamos que se trackeen las siguientes carpetas
+writable/session/
+writable/uploads/heroes/
+writable/logs/
+
+
+
