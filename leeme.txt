@@ -1,0 +1,37 @@
+Base de datos
+	Ejecutar migraciones
+	Si por alguna razón no funcionan las migraciones, entonces ejecutar el script db.sql en su cliente de base datos preferido.
+
+link simbólico
+	Windows
+		mklink /D "C:/laragon/www/developer-marvel/public/uploads" "C:/laragon/www/developer-marvel/writable/uploads"
+	Linux
+		cd /var/www/html/developer-marvel/public
+		ln -s /var/www/html/developer-marvel/writable/uploads/ uploads
+
+https://www.tiny.cloud/
+	generar api key y poner el <scrip> generado en C:\laragon\www\developer-marvel\app\Views\back\layout\head.php
+	agregar el dominio developer-marvel-covalto.local a los dominios aprovados
+
+
+Requisitos mínimos
+	php 8.2
+	mariadb 10.11.5
+	La base de datos tendrá el collation: utf8mb4_general_ci
+
+
+
+
+TODO
+TODO
+TODO
+TODO
+
+		Mostrar en front sólo los publicados
+		Eliminar todo ibero
+        1. Buscador front
+        2. Paginación
+
+
+		En el Youtube que grabe, ir repasando cada uno de los requerimientos que solicitó Covalto, y mencionar claramente que parte de lo que solicitán está en el front, no en el back
+
