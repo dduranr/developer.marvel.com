@@ -26,136 +26,84 @@ if ( !function_exists('getMarvelAllCharacters' ) ){
 
         $boolReturn = false;
         $msgReturn = '';
-        $dataReturn = null;
         $timestamp = time();
         $hash = md5($timestamp.MARVEL_API_PRIVATE_KEY.MARVEL_API_PUBLIC_KEY);
+        $offset = 0;
+        $dataReturn = [];
         $params = array(
             'apikey' => MARVEL_API_PUBLIC_KEY,
             'hash' => $hash,
             'ts' => $timestamp,
             'limit' => 40, // Con más de 50 falla
         );
+        $seEncontroError = false;
 
+        do {
+            $params['offset'] = $offset;
 
-        $sesion_curl = curl_init();
-        curl_setopt($sesion_curl, CURLOPT_SSL_VERIFYPEER, false); // Si nuestro dominio de pruebas no cuenta con SSL
-        curl_setopt($sesion_curl, CURLOPT_URL, 'https://gateway.marvel.com:443/v1/public/characters?'.http_build_query($params));
-        curl_setopt($sesion_curl, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'charset=utf-8',
-            'Authentication: bearer ' . MARVEL_API_PRIVATE_KEY,
-        ));
-        curl_setopt($sesion_curl, CURLOPT_POST, false);
-        curl_setopt($sesion_curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($sesion_curl, CURLOPT_HEADER,         true);
-        $respuestaCURL = curl_exec($sesion_curl);
-        $error_curl = curl_error($sesion_curl);
+            $sesion_curl = curl_init();
+            curl_setopt($sesion_curl, CURLOPT_SSL_VERIFYPEER, false); // Si nuestro dominio de pruebas no cuenta con SSL
+            curl_setopt($sesion_curl, CURLOPT_URL, 'https://gateway.marvel.com:443/v1/public/characters?'.http_build_query($params));
+            curl_setopt($sesion_curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'charset=utf-8',
+                'Authentication: bearer ' . MARVEL_API_PRIVATE_KEY,
+            ));
+            curl_setopt($sesion_curl, CURLOPT_POST, false);
+            curl_setopt($sesion_curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($sesion_curl, CURLOPT_HEADER,         true);
+            $respuestaCURL = curl_exec($sesion_curl);
+            $error_curl = curl_error($sesion_curl);
 
-        // echo '$error_curl: <pre>';
-        // print_r($error_curl);
-        // echo '<hr>';
-        // var_dump($error_curl);
-        // echo '</pre>';
-        // echo '<hr><hr><hr>';
+            $headersCURL = null;
+            $bodyCURL = null;
+            $offset += 20;
 
-        if (strlen($error_curl) > 0) {
-            if ( strpos($error_curl, 'OpenSSL SSL_read') === false ) {
-                $msgReturn = 'Ooops! Se encontró un problema relacionado con el certificado SSL de Marvel. Por favor intenta más tarde. Error: '.$error_curl;
+            if (strlen($error_curl) > 0) {
+                $seEncontroError = true;
+                if ( strpos($error_curl, 'OpenSSL SSL_read') === false ) {
+                    $msgReturn .= 'Ooops! Se encontró un problema (en el offset '.$offset.') relacionado con el certificado SSL de Marvel. Por favor intenta más tarde. Error: '.$error_curl;
+                }
+                else {
+                    $msgReturn .= 'Ooops! Se encontró un problema inesperado (en el offset '.$offset.'): '.$error_curl;
+                }
             }
             else {
-                $msgReturn = 'Ooops! Se encontró un problema inesperado: '.$error_curl;
-            }
+                $respuestaCURL = explode("\r\n\r\n", $respuestaCURL);
 
+                if ( is_array($respuestaCURL) && count($respuestaCURL)===2 ) {
 
-            // echo '$respuestaCURL: <pre>';
-            // print_r($respuestaCURL);
-            // echo '<hr>';
-            // var_dump($respuestaCURL);
-            // echo '</pre>';
-            // exit();
+                    $headersCURL = explode("\n", $respuestaCURL[0]);
+                    $bodyCURL = json_decode($respuestaCURL[1], true);
 
-        }
-        else {
-
-            // echo '<h3>HEADERS</h3>';
-            // echo '<pre>';
-            // print_r($headersCURL);
-            // echo '</pre>';
-            //      Array (
-            //          [0] => HTTP/1.1 200 OK
-            //          [1] => ETag: 2b4e29058ef64a71efc61ce70e3f59f63f3d0e83
-            //          [2] => Content-Type: application/json; charset=utf-8
-            //          [3] => Content-Length: 99813
-            //          [4] => Date: Tue, 30 Jul 2024 13:38:05 GMT
-            //          [5] => Connection: keep-alive
-            //      )
-
-            // echo '<h3>BODY</h3>';
-            // echo '<pre>';
-            // print_r($bodyCURL);
-            // echo '</pre>';
-            //      Array (
-            //          [code] => 200
-            //          [status] => Ok
-            //          [copyright] => © 2024 MARVEL
-            //          [attributionText] => Data provided by Marvel. © 2024 MARVEL
-            //          [attributionHTML] => Data provided by Marvel. © 2024 MARVEL
-            //          [etag] => 2b4e29058ef64a71efc61ce70e3f59f63f3d0e83
-            //          [data] => Array (
-            //                  [offset] => 0
-            //                  [limit] => 20
-            //                  [total] => 1564
-            //                  [count] => 20
-            //                  [results] => Array (
-            //                          [0] => Array...
-            //                          [1] => Array...
-            //                          [2] => Array...
-
-            $respuestaCURL = explode("\r\n\r\n", $respuestaCURL);
-
-            if ( is_array($respuestaCURL) && count($respuestaCURL)===2 ) {
-
-                $headersCURL = explode("\n", $respuestaCURL[0]);
-                $bodyCURL = json_decode($respuestaCURL[1], true);
-
-
-                // echo '$headersCURL: <pre>';
-                // print_r($headersCURL);
-                // echo '<hr>';
-                // var_dump($headersCURL);
-                // echo '</pre>';
-
-                // echo '<hr><hr><hr>';
-
-
-                // echo '$bodyCURL: <pre>';
-                // print_r($bodyCURL);
-                // echo '<hr>';
-                // var_dump($bodyCURL);
-                // echo '</pre>';
-
-                // exit();
-
-
-                if (isset($bodyCURL['status']) && $bodyCURL['status']==='Ok') {
-                    if (isset($bodyCURL['data']['count']) && $bodyCURL['data']['count']>0) {
-                        $boolReturn = true;
-                        $msgReturn = 'Todo ok.';
-                        $dataReturn = $bodyCURL['data']['results'];
+                    if (isset($bodyCURL['status']) && $bodyCURL['status']==='Ok') {
+                        if (isset($bodyCURL['data']['count']) && $bodyCURL['data']['count']>0) {
+                            $dataReturn = array_merge($dataReturn, $bodyCURL['data']['results']);
+                            $msgReturn .= 'Se recuperaron correctamente héroes correspondientes al offset: '.$offset.'.';
+                        }
+                        else {
+                            $msgReturn .= 'La petición cURL fue exitosa pero no devolvió ningún resultado (en el offset '.$offset.') .';
+                        }
                     }
                     else {
-                        $msgReturn .= 'La petición cURL fue exitosa pero no devolvió ningún resultado.';
+                        $msgReturn .= 'La petición cURL se realizó correctamente pero devolvió error (en el offset '.$offset.') : code: '.$bodyCURL['code'].', '.$bodyCURL['status'];
                     }
                 }
                 else {
-                    $msgReturn .= 'La petición cURL se realizó correctamente pero devolvió error: code: '.$bodyCURL['code'].', '.$bodyCURL['status'];
+                    $msgReturn .= 'La respuesta cURL no llegó como se esperaba (en el offset '.$offset.') . Ver por qué no pudo explotarse la respuestaCURL con el delimitador: "\r\n\r\n". La presente fallida respuestaCURL se tuvo que haber almacenado en la carpeta /writable/logs/';
+                    log_message('error', 'general_helper.php ('.__LINE__.'). Respuesta cURL fallida: '.$msgReturn);
                 }
             }
-            else {
-                $msgReturn .= 'La respuesta cURL no llegó como se esperaba. Ver por qué no pudo explotarse la respuestaCURL con el delimitador: "\r\n\r\n". La presente fallida respuestaCURL se tuvo que haber almacenado en la carpeta /writable/logs/';
-                log_message('error', 'general_helper.php ('.__LINE__.'). Respuesta cURL fallida: '.$msgReturn);
-            }
+        // } while ();
         }
+        /*
+            Para que se recuperen todos los registros la condición del WHILE sería: $bodyCURL['data']['total'] > $offset
+            Aproximadamente 100 registros se recuepran en 5 minutos. Marvel tiene más de 1500, tardaríamos horas en recuperar todos. Por tanto, y a modo de prueba, recuperamos solamente 40, lo cual tarda aproximadamente 2 minutos.
+        */
+        while ( $offset <= 41 );
+
+        if ( count($dataReturn) > 0 ) $boolReturn = true;
+
         return array(
             'status' => $boolReturn,
             'msg' => $msgReturn,

@@ -9,7 +9,9 @@ use App\Models\UsersinfoModel;
 class Auth extends BaseController
 {
     private $usersModel;
+    private $usersinfoModel;
     private $validation;
+    private $db;
     public $session;
     public $generalHelper;
     public $errores;

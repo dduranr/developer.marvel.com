@@ -4,7 +4,6 @@ namespace App\Controllers\Front;
 
 use App\Controllers\BaseController;
 use App\Models\HeroesModel;
-use App\Models\ConfiguracionesModel;
 use \PDO;
 use \DateTime;
 
@@ -14,13 +13,13 @@ class Frontend extends BaseController
     protected $pdo;
     public $session;
     public $errores;
+    public $heroesModel;
 
     public function __construct()
     {
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->heroesModel = new HeroesModel();
-        $this->configuracionesModel = new ConfiguracionesModel();
         $this->errores = '';
     }
 
