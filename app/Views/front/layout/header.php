@@ -23,7 +23,8 @@
                         'class'   => 'd-flex',
                         'id'      => 'form-buscar-heroes',
                         'csrf_id' => 'csrf',
-                        'role' => 'search'
+                        'role'    => 'search',
+                        'method'  => 'get'
                     ];
                     echo form_open(base_url('buscar'), $attributes);
                 ?>

@@ -90,6 +90,4 @@ $RECYCLE.BIN/
 writable/session/
 writable/uploads/heroes/
 writable/logs/
-
-
-
+writable/debugbar/

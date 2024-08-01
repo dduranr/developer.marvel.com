@@ -22,8 +22,12 @@
 
             <div class="col-md-10 text-center">
 
-
                 <?php if( count($heroes) > 0 ) : ?>
+
+                    <div class="text-start">
+                        <small>Datos proporcionados por Marvel. © 2014 Marvel</small>
+                    </div>
+
                     <?php
                         $numCard = 0;
                         foreach ($heroes as $heroe_key => $heroe) :
@@ -39,14 +43,16 @@
                         <?php endif; ?>
 
                         <div class="card mx-2 border">
-                            <?php if (strlen(trim($heroe['imagen']))>0) : ?>
-	                            <?php if (strlen(trim($heroe['resourceURI']))>0) : ?>
-	                                <a href="<?php echo $heroe['resourceURI']; ?>" target="_blank">
-	                                    <img class="card-img-top img-thumbnail" src="<?php echo $heroe['imagen']; ?>" alt="<?php echo $heroe['name']; ?>">
-	                                </a>
-	                            <?php else : ?>
-	                                <img class="card-img-top img-thumbnail" src="<?php echo $heroe['imagen']; ?>" alt="<?php echo $heroe['name']; ?>">
-	                            <?php endif; ?>
+                            <?php if (true) : ?>
+                                <?php if (strlen(trim($heroe['imagen']))>0) : ?>
+    	                            <?php if (strlen(trim($heroe['resourceURI']))>0) : ?>
+    	                                <a href="<?php echo $heroe['resourceURI']; ?>" target="_blank">
+    	                                    <img class="card-img-top img-thumbnail" src="<?php echo $heroe['imagen']; ?>" alt="<?php echo $heroe['name']; ?>">
+    	                                </a>
+    	                            <?php else : ?>
+    	                                <img class="card-img-top img-thumbnail" src="<?php echo $heroe['imagen']; ?>" alt="<?php echo $heroe['name']; ?>">
+    	                            <?php endif; ?>
+                                <?php endif; ?>
                             <?php endif; ?>
 
                             <div class="card-body">
@@ -104,7 +110,7 @@
 
             <div class="col-md-12 text-center mb-1">
                 <div class="d-flex justify-content-center mt-5">
-                	paginación
+                	<?php echo $pager->links(); ?>
                 </div>
             </div>
 

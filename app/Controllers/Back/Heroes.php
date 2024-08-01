@@ -388,7 +388,7 @@ class Heroes extends BaseController
                 }
             }
             else {
-                $this->session->setFlashdata('toastr', '{"tipo": "error", "msg": "$héroes[\'msg\']", "title": "¡Ooops!"}');
+                $this->session->setFlashdata('toastr', '{"tipo": "error", "msg": "'.$heroes['msg'].'", "title": "¡Ooops!"}');
             }
         }
         return redirect()->back()->withInput();

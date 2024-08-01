@@ -28,7 +28,7 @@ class UsersinfoSeeder extends Seeder
 
         $users[] = array(
             'id_user' => 2,
-            'name' => 'Covalto',
+            'name' => 'Usuario',
             'apellidop' => 'Uno',
             'apellidom' => 'One',
             'imgprofile' => '20240101000000-unknown-thumb.jpg',
@@ -39,7 +39,7 @@ class UsersinfoSeeder extends Seeder
 
         $users[] = array(
             'id_user' => 3,
-            'name' => 'Covalto',
+            'name' => 'Usuario',
             'apellidop' => 'Dos',
             'apellidom' => 'Two',
             'imgprofile' => '20240101000000-unknown-thumb.jpg',

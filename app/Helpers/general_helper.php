@@ -33,6 +33,7 @@ if ( !function_exists('getMarvelAllCharacters' ) ){
             'apikey' => MARVEL_API_PUBLIC_KEY,
             'hash' => $hash,
             'ts' => $timestamp,
+            'limit' => 40, // Con más de 50 falla
         );
 
 
@@ -47,11 +48,32 @@ if ( !function_exists('getMarvelAllCharacters' ) ){
         curl_setopt($sesion_curl, CURLOPT_POST, false);
         curl_setopt($sesion_curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($sesion_curl, CURLOPT_HEADER,         true);
-        $respuesta_curl = curl_exec($sesion_curl);
+        $respuestaCURL = curl_exec($sesion_curl);
         $error_curl = curl_error($sesion_curl);
 
-        if ($msgReturn) {
-            $msgReturn = $error_curl;
+        // echo '$error_curl: <pre>';
+        // print_r($error_curl);
+        // echo '<hr>';
+        // var_dump($error_curl);
+        // echo '</pre>';
+        // echo '<hr><hr><hr>';
+
+        if (strlen($error_curl) > 0) {
+            if ( strpos($error_curl, 'OpenSSL SSL_read') === false ) {
+                $msgReturn = 'Ooops! Se encontró un problema relacionado con el certificado SSL de Marvel. Por favor intenta más tarde. Error: '.$error_curl;
+            }
+            else {
+                $msgReturn = 'Ooops! Se encontró un problema inesperado: '.$error_curl;
+            }
+
+
+            // echo '$respuestaCURL: <pre>';
+            // print_r($respuestaCURL);
+            // echo '<hr>';
+            // var_dump($respuestaCURL);
+            // echo '</pre>';
+            // exit();
+
         }
         else {
 
@@ -89,12 +111,31 @@ if ( !function_exists('getMarvelAllCharacters' ) ){
             //                          [1] => Array...
             //                          [2] => Array...
 
-            $respuestaCURL = explode("\r\n\r\n", $respuesta_curl);
+            $respuestaCURL = explode("\r\n\r\n", $respuestaCURL);
 
             if ( is_array($respuestaCURL) && count($respuestaCURL)===2 ) {
 
                 $headersCURL = explode("\n", $respuestaCURL[0]);
                 $bodyCURL = json_decode($respuestaCURL[1], true);
+
+
+                // echo '$headersCURL: <pre>';
+                // print_r($headersCURL);
+                // echo '<hr>';
+                // var_dump($headersCURL);
+                // echo '</pre>';
+
+                // echo '<hr><hr><hr>';
+
+
+                // echo '$bodyCURL: <pre>';
+                // print_r($bodyCURL);
+                // echo '<hr>';
+                // var_dump($bodyCURL);
+                // echo '</pre>';
+
+                // exit();
+
 
                 if (isset($bodyCURL['status']) && $bodyCURL['status']==='Ok') {
                     if (isset($bodyCURL['data']['count']) && $bodyCURL['data']['count']>0) {

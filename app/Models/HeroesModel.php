@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class HeroesModel extends Model
 {
+    // protected $paginateGroup    = 'marvel';
     protected $table            = 'heroes';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;

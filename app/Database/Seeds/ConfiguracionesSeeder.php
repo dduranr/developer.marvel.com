@@ -14,7 +14,7 @@ class ConfiguracionesSeeder extends Seeder
         $configuraciones = array(
             array(
                 'nombre' => 'Generales',
-                'datos' => '{"id":1,"configuraciones":{"1":{"appname":"DeveloperMarvelCovalto"},"2":{"versioncaptcha":2},"3":{"emailsupport":"official.dduran@gmail.com"}}}',
+                'datos' => '{"id":1,"configuraciones":{"1":{"appname":"Developer Marvel"},"2":{"versioncaptcha":2},"3":{"emailsupport":"official.dduran@gmail.com"}}}',
                 'publicado' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => null,

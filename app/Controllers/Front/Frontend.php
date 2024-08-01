@@ -32,7 +32,7 @@ class Frontend extends BaseController
     */
 	public function index()
 	{
-        $heroesRaw = $this->heroesModel->where('publicado', 1)->findAll();
+        $heroesRaw = $this->heroesModel->where('publicado', 1)->paginate(6);
         $heroes = [];
 
         if ( count($heroesRaw) > 0 ) {
@@ -54,6 +54,7 @@ class Frontend extends BaseController
         }
 
         $data['heroes'] = $heroes;
+        $data['pager'] = $this->heroesModel->pager;
         return view('front/index', $data);
     }
 
@@ -78,25 +79,22 @@ class Frontend extends BaseController
         else {
 
             $heroes = [];
-            $buscar = $this->request->getPost('buscar');
+            $buscar = $this->request->getGet('buscar');
             $likeArray = ['name' => $buscar, 'description' => $buscar];
+
             $heroesRaw = $this->heroesModel->where('publicado', 1)
                 ->groupStart()
                 ->like('name', $buscar)
                 ->orLike('description', $buscar)
                 ->groupEnd()
-                ->findAll();
-
+                ->paginate(3);
 
             $htmlResult = '';
 
             if ( count($heroesRaw) > 0 ) {
-                if ( count($heroesRaw) === 1 ) {
-                    $htmlResult = '<p>Se encontró un superhéroe coincidente con <strong>'.$buscar.'</strong>.</p>';
-                }
-                else {
-                    $htmlResult = '<p>Se encontraron <strong>'.count($heroesRaw).'</strong> superhéroes coincidentes con <strong>'.$buscar.'</strong>.</p>';
-                }
+                $htmlResult = ' con <strong>'.$buscar.'</strong>.</p>';
+                if ( count($heroesRaw) === 1 ) $htmlResult = '<p>Se encontró un superhéroe coincidente'.$htmlResult;
+                else $htmlResult = '<p>Se encontraron varios superhéroes coincidentes'.$htmlResult;
 
                 foreach ($heroesRaw as $heroe) {
 
@@ -120,6 +118,7 @@ class Frontend extends BaseController
             }
 
             $data['heroes'] = $heroes;
+            $data['pager'] = $this->heroesModel->pager;
             $data['expresion'] = $buscar;
             $data['htmlResult'] = $htmlResult;
             return view('front/busqueda-resultados', $data);

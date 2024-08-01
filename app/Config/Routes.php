@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->get('/', 'Front\Frontend::index');
-$routes->post('/buscar', 'Front\Frontend::buscar');
+$routes->get('/buscar', 'Front\Frontend::buscar');
 
 
 
