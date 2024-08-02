@@ -34,7 +34,7 @@ if ( !function_exists('getMarvelAllCharacters' ) ){
             'apikey' => MARVEL_API_PUBLIC_KEY,
             'hash' => $hash,
             'ts' => $timestamp,
-            'limit' => 40, // Con más de 50 falla
+            'limit' => 20,
         );
         $seEncontroError = false;
 

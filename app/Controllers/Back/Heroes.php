@@ -238,25 +238,27 @@ class Heroes extends BaseController
             $comic_names = $this->request->getPost('comic_name');
             $dataToSave = $this->request->getPost();
 
-            if (count($comic_resourceURIs) !== count($comic_names)) {
-                $this->errores .= 'Se encuentran '.count($comic_resourceURIs).' comic_resourceURIs y '.count($comic_names).' comic_names. El número debe ser el mismo en ambos.';
-            }
-            else {
-                // Con array_combine hacemos que los valores del array "comic_resourceURI" sean los keys del array $comics, y los valores del array "comic_name" sean los valores
-                $comicsRaw = array_combine($comic_resourceURIs, $comic_names);
-                $comics = [];
-
-                foreach ($comicsRaw as $key => $value) {
-                    $comics[] = [
-                        'resourceURI' => $key,
-                        'name' => $value
-                    ];
+            if (!is_null($comic_resourceURIs)) {
+                if (count($comic_resourceURIs) !== count($comic_names)) {
+                    $this->errores .= 'Se encuentran '.count($comic_resourceURIs).' comic_resourceURIs y '.count($comic_names).' comic_names. El número debe ser el mismo en ambos.';
                 }
+                else {
+                    // Con array_combine hacemos que los valores del array "comic_resourceURI" sean los keys del array $comics, y los valores del array "comic_name" sean los valores
+                    $comicsRaw = array_combine($comic_resourceURIs, $comic_names);
+                    $comics = [];
 
-                $comicsRaw = json_encode($comicsRaw);
-                $dataToSave['comics_items'] = json_encode($comics);
-                unset($dataToSave['comic_resourceURI']);
-                unset($dataToSave['comic_name']);
+                    foreach ($comicsRaw as $key => $value) {
+                        $comics[] = [
+                            'resourceURI' => $key,
+                            'name' => $value
+                        ];
+                    }
+
+                    $comicsRaw = json_encode($comicsRaw);
+                    $dataToSave['comics_items'] = json_encode($comics);
+                    unset($dataToSave['comic_resourceURI']);
+                    unset($dataToSave['comic_name']);
+                }
             }
 
 

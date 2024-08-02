@@ -1,37 +1,38 @@
-Base de datos
-	Ejecutar migraciones
-	Si por alguna razón no funcionan las migraciones, entonces ejecutar el script db.sql en su cliente de base datos preferido.
 
-link simbólico
-	Windows
-		mklink /D "C:/laragon/www/developer-marvel/public/uploads" "C:/laragon/www/developer-marvel/writable/uploads"
-	Linux
-		cd /var/www/html/developer-marvel/public
-		ln -s /var/www/html/developer-marvel/writable/uploads/ uploads
+Documentación para hacer deploy
 
-https://www.tiny.cloud/
-	generar api key y poner el <scrip> generado en C:\laragon\www\developer-marvel\app\Views\back\layout\head.php
-	agregar el dominio developer-marvel-covalto.local a los dominios aprovados
+	1. Requisitos mínimos
+		php 8.2
+		mariadb 10.11.5
+		La base de datos tendrá el collation: utf8mb4_general_ci
 
+	2. Ajustar las constantes y variables en los siguientes archivos:
+		1. /app/Config/Database.php
+		2. /app/Controllers/Datatables/Datatables.php
+		3. /app/Config/Constants.php
+			En la parte de hasta abajo de este archivo hay múltiples constantes custom que hay que cambiar de acuerdo a su ambiente.
 
-Requisitos mínimos
-	php 8.2
-	mariadb 10.11.5
-	La base de datos tendrá el collation: utf8mb4_general_ci
+	3. Base de datos
+		1. Ejecutar migraciones
+			php spark migrate
+			php spark db:seed Init
 
+		2. Si por alguna razón no funcionan las migraciones, entonces ejecutar el script db.sql en su cliente de base datos preferido.
 
+	4. Crear link simbólico
 
+		Windows
+			mklink /D "C:/laragon/www/developer-marvel/public/uploads" "C:/laragon/www/developer-marvel/writable/uploads"
 
-TODO
-TODO
-TODO
-TODO
+		Linux
+			cd /var/www/html/developer-marvel/public
+			ln -s /var/www/html/developer-marvel/writable/uploads/ uploads
 
-		Mostrar en front sólo los publicados
-		Eliminar todo ibero
-        1. Buscador front
-        2. Paginación
+	5. https://www.tiny.cloud/
+		El campo descripción de cada héroe usa TinyMCE, por tanto, para que funcione correctamente el aplicativo es necesario realizar lo siguiente:
 
+		1. Generar api key y poner el <scrip> generado en tiny.cloud, dentro de /app/Views/back/layout/head.php
+		2. Agregar el dominio en el que se vaya a montar el presente aplicativo, a los dominios aprovados dentro de tiny.cloud
 
-		En el Youtube que grabe, ir repasando cada uno de los requerimientos que solicitó Covalto, y mencionar claramente que parte de lo que solicitán está en el front, no en el back
-
+	6. OTROS
+		1. En el archivo .env la constante CI_ENVIRONMENT están modo production. Si por alguna razón necesitan pasar a modo dev, recordar regresar a prod en cuanto terminen de hacer pruebas, ya que si se deja en modo dev, el navegador puede llegar a devolver algún error relacionado con el debug bar, y el modo temporal de arreglar esto es pasar a prod.
