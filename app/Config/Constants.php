@@ -131,7 +131,7 @@ defined('GROUPADMINS') OR define('GROUPADMINS', array(1,4));
 // ID's de los administradores normales
 defined('ADMINS') OR define('ADMINS', array(1, 2));
 
-defined('APPNAME') OR define('APPNAME', 'Tu espacio');
+defined('APPNAME') OR define('APPNAME', 'Developer Marvel');
 
 defined('MIMETYPESIMG') OR define('MIMETYPESIMG', array(
     'image/png',

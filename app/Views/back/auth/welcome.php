@@ -13,10 +13,19 @@
                 else $nombreDelUser = $this->session->name;
             ?>
 
-            <h1 class="header center orange-text">Bienvenid@ <?php echo $nombreDelUser; ?></h1>
-            <?php if(isset($this->session->name_group) && strlen($this->session->name_group)>0) : ?>
-                <h4 class="header center orange-text">(<?php echo $this->session->name_group; ?>)</h4>
-            <?php endif; ?>
+            <h1 class="header center orange-text">Hola, Covalto</h1>
+            <ul>
+                <li>
+                    <h5 class="header center orange-text">
+                        -> El CRUD que solicitan está aquí en el backend (menú <i>Héroes</i>)
+                    </h5>
+                </li>
+                <li>
+                    <h5 class="header center orange-text">
+                        -> La paginación nativa de CodeIgniter y el buscador que solicitan, están en el frontend: <a href="<?php echo base_url('/'); ?>" target="_blank"><?php echo base_url('/'); ?></a>
+                    </h5>
+                </li>
+            </ul>
 
             <div class="row center">
                 <a href="#!" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>

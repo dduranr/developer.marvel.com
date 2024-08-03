@@ -68,12 +68,6 @@
                     <?php endif; ?>
                 </li>
 
-                <li>
-                    <a class="btn-floating btn-small pulse" href="<?php echo base_url('backend/configuraciones/index'); ?>">
-                        <i class="material-icons white-text">settings</i>
-                    </a>
-                </li>
-
             </ul>
         </div>
     </nav>

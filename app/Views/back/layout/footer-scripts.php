@@ -38,7 +38,7 @@
     <script src="https://www.google.com/recaptcha/api.js?render=<?php echo GOOGLE_SITEKEY; ?>"></script>
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('<?php echo GOOGLE_SITEKEY; ?>', {action: 'tuespacio'}).then(function(token) {
+            grecaptcha.execute('<?php echo GOOGLE_SITEKEY; ?>', {action: 'developermarvel'}).then(function(token) {
                 jQuery('.g-recaptcha-response').val(token);
             });
         });

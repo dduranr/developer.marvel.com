@@ -55,7 +55,6 @@ class User extends BaseController
 
     /**
      * Método encargado de mostrar formulario para crear usuario desde el back
-     * Para este proyecto de developer-marvel-covalto.local, no es necesario el campo descripción con TinyMCE ni cargar foto de perfil, así que, para dejo estos métodos (create y store) tal como están, funcionando con estos campos extra por si me sirven en el futuro. Pero NO se utilizan estos métodos. Los que se utilizan son el register y storeRegister.
      *
      * @return view Formulario para crear ítem
      */
@@ -71,7 +70,6 @@ class User extends BaseController
 
     /**
      * Método encargado de crear ítem en BD
-     * Para este proyecto de developer-marvel-covalto.local, no es necesario el campo descripción con TinyMCE ni cargar foto de perfil, así que, para dejo estos métodos (create y store) tal como están, funcionando con estos campos extra por si me sirven en el futuro. Pero NO se utilizan estos métodos. Los que se utilizan son el register y storeRegister.
      *
      * @return void
      */

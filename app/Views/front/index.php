@@ -98,7 +98,7 @@
                 <?php else : ?>
                     <div class="mt-5 text-start">
                         <h3>No existe ningún superhéroe en la base de datos.</h3>
-                        <p>Impórtalos primero. Para ello inicia sesión <a href="http://developer-marvel-covalto.local/index.php/auth/login" target="_blank">aquí</a> y luego ve al menú <strong>Héroes > Importar</strong></p>
+                        <p>Impórtalos primero. Para ello inicia sesión <a href="<?php echo base_url('auth/login'); ?>" target="_blank">aquí</a> y luego ve al menú <strong>Héroes > Importar</strong></p>
                     </div>
                 <?php endif; ?>
             </div>

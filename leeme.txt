@@ -1,23 +1,31 @@
 
 Documentación para hacer deploy
 
+	La aplicación que entrego la trabajé en el dominio local: http://developer-marvel-covalto.local. Deberán cambiar este dominio por aqué en donde vayan a probar la aplicación en su porpio ambiente.
+
+
 	1. Requisitos mínimos
 		php 8.2
 		mariadb 10.11.5
 		La base de datos tendrá el collation: utf8mb4_general_ci
 
-	2. Ajustar las constantes y variables en los siguientes archivos:
+	2. Ajustar las constantes y variables en los siguientes archivos, de acuerdo a su ambiente:
+		1. /.env
+			En este archivo sólo hay que cambiar el dominio en la variable: app.baseURL
+		1. /app/Config/App.php
+			En este archivo sólo hay que cambiar el dominio en la variable: $baseURL
 		1. /app/Config/Database.php
 		2. /app/Controllers/Datatables/Datatables.php
 		3. /app/Config/Constants.php
 			En la parte de hasta abajo de este archivo hay múltiples constantes custom que hay que cambiar de acuerdo a su ambiente.
 
 	3. Base de datos
-		1. Ejecutar migraciones
+		1. Ejecutar migraciones desde la consola
+			cd /raiz/del/proyecto/
 			php spark migrate
 			php spark db:seed Init
 
-		2. Si por alguna razón no funcionan las migraciones, entonces ejecutar el script db.sql en su cliente de base datos preferido.
+		2. Si por alguna razón no funcionan las migraciones, entonces ejecutar el script db.sql (que está en la raíz del proyecto) en su cliente de base datos preferido.
 
 	4. Crear link simbólico
 
@@ -36,3 +44,14 @@ Documentación para hacer deploy
 
 	6. OTROS
 		1. En el archivo .env la constante CI_ENVIRONMENT están modo production. Si por alguna razón necesitan pasar a modo dev, recordar regresar a prod en cuanto terminen de hacer pruebas, ya que si se deja en modo dev, el navegador puede llegar a devolver algún error relacionado con el debug bar, y el modo temporal de arreglar esto es pasar a prod.
+
+		2. Credenciales para iniciar sesión en el backend
+
+			http://developer-marvel-covalto.local/auth/login
+			user: aspirante_a_developer_covalto
+			pass: FawIC60p9MplHV$4#NwkmN6jpgybozL6U
+
+			Aunque ya están hardcodeadas estas credenciales en el formulario de inicio de sesión: /app/Views/back/auth/create.php
+
+		3. El CRUD que solicitan está en el backend
+		4. La paginación nativa de CodeIgniter y el buscador que solicitan, están en el frontend: http://developer-marvel-covalto.local/
